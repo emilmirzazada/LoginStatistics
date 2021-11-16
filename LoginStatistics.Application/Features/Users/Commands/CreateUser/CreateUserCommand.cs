@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LoginStatistics.Application.Features.Users.Commands.CreateUser
 {
-    public partial class CreateUserCommand : IRequest<User>
+    public class CreateUserCommand : IRequest<User>
     {
         public string Email { get; set; }
         public string Name { get; set; }
@@ -31,7 +31,7 @@ namespace LoginStatistics.Application.Features.Users.Commands.CreateUser
 
             var User = _mapper.Map<User>(request);
             await _userRepository.AddAsync(User);
-            return new User();
+            return User;
 
         }
     }
