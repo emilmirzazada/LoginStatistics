@@ -1,3 +1,4 @@
+using LoginStatistics.Application;
 using LoginStatistics.Infrastructure;
 using LoginStatistics.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Builder;
@@ -30,7 +31,9 @@ namespace LoginStatistics
             services.AddControllers();
 
             services.Configure<MyConfig>(Configuration.GetSection("MyConfig"));
+            services.AddApplicationLayer();
             services.AddInfrastructureLayer(Configuration);
+            services.AddRepositoryInjections(Configuration);
             services.AddApiAuthentification(Configuration);
         }
 

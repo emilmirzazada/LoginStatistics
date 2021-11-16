@@ -21,4 +21,8 @@
     <ProjectReference Include="..\LoginStatistics.Infrastructure\LoginStatistics.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
