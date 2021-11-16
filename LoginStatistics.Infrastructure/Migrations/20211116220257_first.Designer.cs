@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginStatistics.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20211116183049_first")]
+    [Migration("20211116220257_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
