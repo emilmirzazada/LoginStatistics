@@ -17,5 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\LoginStatistics.Domain\LoginStatistics.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Features\Users\Queries\" />
+  </ItemGroup>
 
 </Project>

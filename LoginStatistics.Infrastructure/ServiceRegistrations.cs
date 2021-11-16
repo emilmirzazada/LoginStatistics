@@ -1,5 +1,8 @@
-﻿using LoginStatistics.Domain.Settings;
+﻿using LoginStatistics.Application.Interfaces;
+using LoginStatistics.Application.Interfaces.Repositories;
+using LoginStatistics.Domain.Settings;
 using LoginStatistics.Infrastructure.Contexts;
+using LoginStatistics.Infrastructure.Repositories;
 using LoginStatistics.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +29,13 @@ namespace LoginStatistics.Infrastructure
                b => b.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName)));
         }
 
-        public static void AddApiAuthentification(this IServiceCollection services, IConfiguration configuration)
+        public static void AddRepositoryInjections(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IUserRepository, UserRepository>();
+        }
+
+            public static void AddApiAuthentification(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
             services.AddAuthentication(options =>

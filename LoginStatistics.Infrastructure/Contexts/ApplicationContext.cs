@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LoginStatistics.Infrastructure.Contexts
 {
-    class ApplicationContext : DbContext
+    public class ApplicationContext : DbContext
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
