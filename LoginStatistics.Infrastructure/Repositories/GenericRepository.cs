@@ -55,7 +55,7 @@ namespace LoginStatistics.Infrastructure.Repositories
 
         public async Task DeleteAll(string tableName)
         {
-            await _dbContext.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [@p0]",tableName);
+            await _dbContext.Database.ExecuteSqlRawAsync($"DELETE FROM {tableName}");
         } 
 
         public async Task<IReadOnlyList<T>> GetAllAsync()

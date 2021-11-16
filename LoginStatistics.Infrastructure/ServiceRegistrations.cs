@@ -33,6 +33,7 @@ namespace LoginStatistics.Infrastructure
         {
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ILoginAttemptRepository, LoginAttemptRepository>();
         }
 
             public static void AddApiAuthentification(this IServiceCollection services, IConfiguration configuration)
