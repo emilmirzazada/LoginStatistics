@@ -1,3 +1,4 @@
+using LoginStatistics.API.Extensions;
 using LoginStatistics.Application;
 using LoginStatistics.Infrastructure;
 using LoginStatistics.Infrastructure.Utilities;
@@ -33,6 +34,7 @@ namespace LoginStatistics
             services.Configure<MyConfig>(Configuration.GetSection("MyConfig"));
             services.AddApplicationLayer();
             services.AddInfrastructureLayer(Configuration);
+            services.AddSwaggerExtension();
             services.AddRepositoryInjections(Configuration);
             services.AddApiAuthentification(Configuration);
         }
@@ -50,6 +52,8 @@ namespace LoginStatistics
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSwaggerExtension();
 
             app.UseEndpoints(endpoints =>
             {
