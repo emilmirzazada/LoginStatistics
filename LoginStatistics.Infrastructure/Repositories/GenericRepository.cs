@@ -53,11 +53,10 @@ namespace LoginStatistics.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task MakeDeleted(T entity)
+        public async Task DeleteAll(string tableName)
         {
-            _dbContext.Entry(entity).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
-        }
+            await _dbContext.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [@p0]",tableName);
+        } 
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
