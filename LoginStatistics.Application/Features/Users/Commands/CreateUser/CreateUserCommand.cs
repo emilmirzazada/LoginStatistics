@@ -12,7 +12,9 @@ namespace LoginStatistics.Application.Features.Users.Commands.CreateUser
 {
     public partial class CreateUserCommand : IRequest<User>
     {
+        public string Email { get; set; }
         public string Name { get; set; }
+        public string Surname { get; set; }
     }
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, User>
     {
