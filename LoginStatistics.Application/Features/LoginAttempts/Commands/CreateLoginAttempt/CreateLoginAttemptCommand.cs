@@ -12,9 +12,9 @@ namespace LoginStatistics.Application.Features.LoginAttempts.Commands.CreateLogi
 {
     public class CreateLoginAttemptCommand : IRequest<UserLoginAttempt>
     {
-        public string Email { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public Guid UserId { get; set; }
+        public DateTime AttemptTime { get; set; }
+        public bool IsSuccess { get; set; }
     }
     public class CreateLoginAttemptCommandHandler : IRequestHandler<CreateLoginAttemptCommand, UserLoginAttempt>
     {
