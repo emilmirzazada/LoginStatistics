@@ -5,6 +5,7 @@ using LoginStatistics.Application.Features.RandomData.Commands.GenerateRandomNam
 using LoginStatistics.Application.Features.Users.Commands.CreateUser;
 using LoginStatistics.Application.Features.Users.Commands.DeleteAllUsers;
 using LoginStatistics.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace LoginStatistics.API.Controllers
 {
+    [Authorize]
     public class InitializeController : BaseApiController
     {
         [HttpPost]
@@ -24,10 +26,13 @@ namespace LoginStatistics.API.Controllers
 
             for (int i = 0; i < 50; i++)
             {
+                string name = await Mediator.Send(new GenerateRandomNameCommand { Length = 4 });
+                string surname = await Mediator.Send(new GenerateRandomNameCommand { Length = 6 });
                 User user = await Mediator.Send(new CreateUserCommand
                 {
-                    Name = await Mediator.Send(new GenerateRandomNameCommand { Length = 4 }),
-                    Surname = await Mediator.Send(new GenerateRandomNameCommand { Length = 6 })
+                    Name = name,
+                    Surname = surname,
+                    Email = name + surname + "@GMAIL.COM"
                 });
 
                 for (int j = 0; j < 4; j++)

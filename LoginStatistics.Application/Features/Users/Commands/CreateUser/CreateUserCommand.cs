@@ -12,15 +12,9 @@ namespace LoginStatistics.Application.Features.Users.Commands.CreateUser
 {
     public class CreateUserCommand : IRequest<User>
     {
-        public string Email
-        {
-            get
-            {
-                return Name+Surname+"@GMAIL.COM";
-            }
-        }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string Email { get; set; }
     }
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, User>
     {

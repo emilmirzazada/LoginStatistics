@@ -1,5 +1,6 @@
 using LoginStatistics.API.Extensions;
 using LoginStatistics.Application;
+using LoginStatistics.Application.Interfaces;
 using LoginStatistics.Infrastructure;
 using LoginStatistics.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Builder;
@@ -29,15 +30,14 @@ namespace LoginStatistics
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
             services.Configure<MyConfig>(Configuration.GetSection("MyConfig"));
             services.AddApplicationLayer();
             services.AddInfrastructureLayer(Configuration);
             services.AddSwaggerExtension();
             services.AddRepositoryInjections(Configuration);
             services.AddApiAuthentification(Configuration);
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,9 +52,12 @@ namespace LoginStatistics
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseSwaggerExtension();
+            app.UseErrorHandlingMiddleware();
 
             app.UseEndpoints(endpoints =>
             {
