@@ -38,21 +38,19 @@ namespace LoginStatistics.Infrastructure.Services
             var user = context.Users.
                         Include(x => x.RefreshToken)
                         .Where(x => x.Email == email)
-                        .FirstOrDefault();
+                        !.FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new Exception($"No Accounts Registered with {email}.");
+            }
 
             var attempt = new UserLoginAttempt
             {
                 UserId = user.Id,
-                AttemptTime = _dateTimeService.Now
+                AttemptTime = _dateTimeService.Now,
+                IsSuccess = true
             };
-
-            if (user == null)
-            {
-                attempt.IsSuccess = false;
-                throw new Exception($"No Accounts Registered with {email}.");
-            }
-
-            attempt.IsSuccess = true;
             context.LoginAttempts.Add(attempt);
             context.SaveChanges();
 
@@ -126,10 +124,17 @@ namespace LoginStatistics.Infrastructure.Services
 
         public JwtTokenDto RevokeByRefreshToken(string token)
         {
-            var refreshToken = context.RefreshTokens.Where(x => x.Token == token).FirstOrDefault();
-            var user = context.Users.Where(x => x.RefreshTokenId == refreshToken.Id).FirstOrDefault();
-            JwtTokenDto jwtTokenDto = GenerateJWToken(user);
-            return new JwtTokenDto(jwtTokenDto.Token, jwtTokenDto.Expires);
+            var refreshToken = context.RefreshTokens.Where(x => x.Token == token)!.FirstOrDefault();
+            User user=null;
+            if(refreshToken!=null)
+                user = context.Users.Where(x => x.RefreshTokenId == refreshToken.Id)!.FirstOrDefault();
+            if (user != null)
+            {
+
+                JwtTokenDto jwtTokenDto = GenerateJWToken(user);
+                return new JwtTokenDto(jwtTokenDto.Token, jwtTokenDto.Expires);
+            }
+            return new JwtTokenDto("There is no account related with this token", DateTime.Now);
         }
     }
 }
