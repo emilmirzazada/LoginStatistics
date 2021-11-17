@@ -22,7 +22,7 @@ namespace LoginStatistics.API.Controllers
             await Mediator.Send(new DeleteAllUsersCommand());
             await Mediator.Send(new DeleteAllLoginAttemptsCommand());
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 50; i++)
             {
                 User user = await Mediator.Send(new CreateUserCommand
                 {
@@ -37,8 +37,8 @@ namespace LoginStatistics.API.Controllers
                         UserId = user.Id,
                         AttemptTime = await Mediator.Send(new GenerateRandomDateCommand
                         {
-                            StartDate = new DateTime(2016, 10, 26),
-                            EndDate = new DateTime(2025, 11, 20)
+                            StartDate = new DateTime(2017, 10, 26),
+                            EndDate = new DateTime(2021, 11, 20)
                         }),
                         IsSuccess = j % 2 == 0 ? true : false
                     });
