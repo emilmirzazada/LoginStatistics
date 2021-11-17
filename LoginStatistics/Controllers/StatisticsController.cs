@@ -9,10 +9,17 @@ namespace LoginStatistics.API.Controllers
 {
     public class StatisticsController : BaseApiController
     {
-        [HttpPost]
-        public async Task<IActionResult> GetLoginAttemptsCounters([FromBody] GetLoginAttemptsCountersQuery query)
+        [HttpGet]
+        public async Task<IActionResult> GetLoginAttemptsCounters(string startDate, string endDate, string metric,
+            bool isSuccess)
         {
-            return Ok(await Mediator.Send(query));
+            return Ok(await Mediator.Send(new GetLoginAttemptsCountersQuery
+            {
+                StartDate=startDate,
+                EndDate=endDate,
+                Metric=metric,
+                IsSuccess=isSuccess
+            }));
         }
     }
 }
