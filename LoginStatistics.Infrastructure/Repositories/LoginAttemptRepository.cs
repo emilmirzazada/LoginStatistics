@@ -4,6 +4,7 @@ using LoginStatistics.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -37,7 +38,7 @@ namespace LoginStatistics.Infrastructure.Repositories
                                 .Where(x => x.AttemptTime >= DateTime.Parse(startDate)
                                 && x.AttemptTime <= DateTime.Parse(endDate));
 
-            loginAttempts = _ctx.LoginAttempts
+            loginAttempts = loginAttempts
                                 .Where(l => l.IsSuccess == isSuccess);
 
 
@@ -76,22 +77,18 @@ namespace LoginStatistics.Infrastructure.Repositories
              group d by new
              {
                  Year = d.AttemptTime.Year,
-                 Month = d.AttemptTime.Month,
-                 Day = d.AttemptTime.Day,
-                 Hour = d.AttemptTime.Hour
+                 Month = d.AttemptTime.Month
              } into g
              select new
              {
                  Year = g.Key.Year,
                  Month = g.Key.Month,
-                 Day = g.Key.Day,
-                 Hour = g.Key.Hour,
                  Value = g.Count()
              }
            ).AsEnumerable()
             .Select(g => new
             {
-                Period = g.Year + "-" + g.Month + "-" + g.Day + " " + g.Hour + ":00",
+                Period = new DateTime(g.Year, g.Month, 1).ToString("MMMM", CultureInfo.InvariantCulture)+", " + g.Year,
                 Value = g.Value
             });
 
@@ -103,23 +100,17 @@ namespace LoginStatistics.Infrastructure.Repositories
                 (from d in loginAttempts
                  group d by new
                  {
-                     Year = d.AttemptTime.Year,
-                     Month = d.AttemptTime.Month,
-                     Day = d.AttemptTime.Day,
-                     Hour = d.AttemptTime.Hour
+                     Year = d.AttemptTime.Year
                  } into g
                  select new
                  {
                      Year = g.Key.Year,
-                     Month = g.Key.Month,
-                     Day = g.Key.Day,
-                     Hour = g.Key.Hour,
                      Value = g.Count()
                  }
                ).AsEnumerable()
                 .Select(g => new
                 {
-                    Period = g.Year + "-" + g.Month + "-" + g.Day + " " + g.Hour + ":00",
+                    Period = g.Year,
                     Value = g.Value
                 });
 
