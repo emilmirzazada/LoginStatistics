@@ -1,4 +1,5 @@
 ﻿using LoginStatistics.Application.Features.Users.Queries.GetAllUsers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace LoginStatistics.API.Controllers
 {
+    [Authorize]
     public class UserController : BaseApiController
     {
         [HttpGet]

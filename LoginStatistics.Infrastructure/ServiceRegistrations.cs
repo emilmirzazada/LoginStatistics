@@ -3,6 +3,7 @@ using LoginStatistics.Application.Interfaces.Repositories;
 using LoginStatistics.Domain.Settings;
 using LoginStatistics.Infrastructure.Contexts;
 using LoginStatistics.Infrastructure.Repositories;
+using LoginStatistics.Infrastructure.Services;
 using LoginStatistics.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
@@ -34,6 +35,9 @@ namespace LoginStatistics.Infrastructure
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ILoginAttemptRepository, LoginAttemptRepository>();
+
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IDateTimeService, DateTimeService>();
         }
 
             public static void AddApiAuthentification(this IServiceCollection services, IConfiguration configuration)

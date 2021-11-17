@@ -11,5 +11,8 @@ namespace LoginStatistics.Domain.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
         public List<UserLoginAttempt> LoginAttempts { get; set; }
+
+        public int? RefreshTokenId { get; set; }
+        public RefreshToken RefreshToken { get; set; }
     }
 }

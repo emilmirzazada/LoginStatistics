@@ -18,5 +18,8 @@
   <ItemGroup>
     <ProjectReference Include="..\LoginStatistics.Application\LoginStatistics.Application.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
 
 </Project>
