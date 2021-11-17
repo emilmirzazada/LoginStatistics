@@ -7,6 +7,7 @@ namespace LoginStatistics.Application.Interfaces.Repositories
 {
     public interface ILoginAttemptRepository : IGenericRepository<UserLoginAttempt>
     {
-
+        IEnumerable<object> GetLoginAttemptsCounters(string startDate, string endDate, string metric,
+                                                              bool isSuccess);
     }
 }

@@ -10,7 +10,7 @@ namespace LoginStatistics.API.Controllers
 {
     public class UserDetailsController : BaseApiController
     {
-        [HttpGet()]
+        [HttpGet]
         public async Task<IActionResult> GetByEmail(string email)
         {
             return Ok(await Mediator.Send(new GetUserDetailsQuery { Email = email }));
