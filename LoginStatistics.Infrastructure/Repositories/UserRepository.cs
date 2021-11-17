@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LoginStatistics.Infrastructure.Repositories
 {
@@ -19,6 +20,19 @@ namespace LoginStatistics.Infrastructure.Repositories
         {
             users = dbContext.Set<User>();
             _ctx = dbContext;
+        }
+
+        public async Task<IEnumerable<User>> GetAllUsers(int pageNumber, int pageSize)
+        {
+
+            var users = await _ctx
+                .Set<User>()
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Include(x=>x.LoginAttempts)
+                .AsNoTracking()
+                .ToListAsync();
+            return users;
         }
 
         public IEnumerable<User> GetUserDetailsByEmail(string email)
