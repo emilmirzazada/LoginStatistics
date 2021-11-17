@@ -15,7 +15,9 @@ namespace LoginStatistics.API.Extensions
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "LoginStatistics.WebApi");
+                c.RoutePrefix = string.Empty;
             });
+
         }
 
         public static void UseErrorHandlingMiddleware(this IApplicationBuilder app)
